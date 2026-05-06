@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Lottery UI</title>
+
+<style>
+body{
+    margin:0;
+    font-family:"Segoe UI",sans-serif;
+    background:#f3f5f9;
+}
+
+/* HEADER */
+.header{
+    display:flex;
+    justify-content:space-between;
+    padding:15px 25px;
+    background:#fff;
+    border-bottom:1px solid #ddd;
+}
+
+.balls span{
+    width:42px;height:42px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    color:#fff;
+    font-weight:bold;
+    margin:0 5px;
+    background:linear-gradient(145deg,#5a9df9,#2d6cdf);
+}
+
+/* LAYOUT */
+.container{display:flex;padding:20px}
+.left{flex:3;margin-right:20px}
+.right{flex:1;background:#fff;border-radius:12px;padding:15px}
+
+/* BOX */
+.box{background:#fff;border-radius:12px;padding:15px}
+
+/* TABS */
+.tabs{display:flex;gap:15px;border-bottom:1px solid #eee;padding-bottom:10px}
+.tab{cursor:pointer;padding:8px 14px;border-radius:6px}
+.tab.active{background:#e7f0ff;color:#2d6cdf;font-weight:bold}
+
+/* SUB */
+.subtabs{margin-top:10px;display:flex;gap:10px}
+.subtab{background:#f0f2f6;padding:6px 12px;border-radius:6px;cursor:pointer}
+.subtab.active{background:#2d6cdf;color:white}
+
+/* SUBTABS DE */
+.subtabs-de{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+.subtab-de{background:#f0f2f6;padding:6px 12px;border-radius:6px;cursor:pointer}
+.subtab-de.active{background:#2d6cdf;color:white}
+
+/* SUBTABS DAU DUOI */
+.subtabs-dd{margin-top:10px;display:flex;gap:10px}
+.subtab-dd{background:#f0f2f6;padding:6px 12px;border-radius:6px;cursor:pointer}
+.subtab-dd.active{background:#2d6cdf;color:white}
+
+/* MODE */
+.mode-tabs{margin-top:10px;display:flex;gap:10px;justify-content:flex-end}
+.mode{padding:6px 12px;border-radius:6px;background:#eee;cursor:pointer}
+.mode.active{background:#2d6cdf;color:#fff}
+
+.mode-tabs-de{margin-top:10px;display:flex;gap:10px;justify-content:flex-end}
+.mode-de{padding:6px 12px;border-radius:6px;background:#eee;cursor:pointer}
+.mode-de.active{background:#2d6cdf;color:#fff}
+
+.mode-tabs-dd{margin-top:10px;display:flex;gap:10px;justify-content:flex-end}
+.mode-dd{padding:6px 12px;border-radius:6px;background:#eee;cursor:pointer}
+.mode-dd.active{background:#2d6cdf;color:#fff}
+
+/* NUMBER */
+.row{margin-top:15px}
+.label{margin-bottom:5px;color:#555}
+.numbers span{
+    width:38px;height:38px;border-radius:50%;
+    border:1px solid #ccc;
+    display:inline-flex;align-items:center;justify-content:center;
+    margin:3px;cursor:pointer;background:#fff;
+    transition:0.2s;
+}
+.numbers span:hover{border-color:#2d6cdf}
+.numbers span.active{
+    background:#2d6cdf;color:#fff;border:none;
+    box-shadow:0 3px 8px rgba(0,0,0,0.15);
+}
+
+/* ACTION */
+.actions{margin-top:5px}
+.actions button{
+    margin:2px;padding:5px 8px;border:none;border-radius:5px;
+    cursor:pointer;background:#e6ebf5;
+}
+.actions button:hover{background:#2d6cdf;color:#fff}
+
+/* INFO */
+.info{margin-top:15px;display:flex;justify-content:space-between;align-items:center}
+.badge{background:#e7f0ff;padding:5px 10px;border-radius:6px;color:#2d6cdf;font-weight:bold}
+
+/* BUTTON */
+.btn{padding:8px 15px;border:none;border-radius:6px;color:#fff;cursor:pointer}
+.blue{background:#2d6cdf}
+.orange{background:#ff8c1a}
+.gray{background:#ccc;color:#333}
+
+.table{margin-top:15px;border-top:1px solid #eee;padding:20px;text-align:center;color:#888}
+
+.numbers span.disabled{
+    opacity:0.3;
+    pointer-events:none;
+}
+
+.mode-tabs-xien{
+    margin-top:10px;
+    display:flex;
+    gap:10px;
+    justify-content:flex-end;
+}
+/* SUBTAB XIÊN */
+.subtab-xien{
+    background:#f0f2f6;
+    padding:6px 12px;
+    border-radius:6px;
+    cursor:pointer;
+    transition:0.2s;
+}
+.subtab-xien.active{
+    background:#2d6cdf;
+    color:#fff;
+    font-weight:bold;
+}
+
+/* MODE XIÊN */
+.mode-xien{
+    padding:6px 12px;
+    border-radius:6px;
+    background:#eee;
+    cursor:pointer;
+    transition:0.2s;
+}
+.mode-xien.active{
+    background:#2d6cdf;
+    color:#fff;
+}
+
+/* QUICK BUTTON */
+#xienQuick button{
+    padding:8px 14px;
+    border:none;
+    border-radius:6px;
+    background:#2d6cdf;
+    color:#fff;
+    cursor:pointer;
+}
+#xienQuick button:hover{
+    background:#1f57b3;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <div>
+        <b>Miền Bắc</b><br>Kết quả 04/05/2026
+    </div>
+    <div class="balls">
+        <span>1</span><span>1</span><span>2</span><span>5</span><span>1</span>
+    </div>
+</div>
+
+<div class="container">
+
+<div class="left">
+<div class="box">
+
+<!-- MAIN TAB -->
+<div class="tabs">
+    <div class="tab active">Bao lô</div>
+    <div class="tab">Lô xiên</div>
+    <div class="tab">Đánh đề</div>
+    <div class="tab">Đầu Đuôi</div>
+
+    <span onclick="openGuide()" style="cursor:pointer;color:#2d6cdf;">
+        ℹ️ Cách chơi
+    </span>
+</div>
+<div style="text-align:right;margin-bottom:10px;">
+</div>
+
+<!-- SUB TAB BAO LÔ -->
+<div class="subtabs" style="margin-top:15px;">
+    <div class="subtab active" data-type="2" data-rate="27000">Lô 2 số</div>
+    <div class="subtab" data-type="2" data-rate="23000">Lô 2 số đầu</div>
+    <div class="subtab" data-type="2" data-rate="1000">Lô 2 số 1K</div>
+    <div class="subtab" data-type="3" data-rate="23000">Lô 3 số</div>
+    <div class="subtab" data-type="4" data-rate="20000">Lô 4 số</div>
+</div>
+
+<!-- SUB TAB ĐỀ -->
+<div class="subtabs-de" style="display:none;">
+    <div class="subtab-de active" data-de-type="db">Đề đặc biệt</div>
+    <div class="subtab-de" data-de-type="db-dau">Đề đầu đặc biệt</div>
+    <div class="subtab-de" data-de-type="g7">Đề giải 7</div>
+    <div class="subtab-de" data-de-type="g1">Đề giải nhất</div>
+    <div class="subtab-de" data-de-type="g1-dau">Đề đầu giải nhất</div>
+</div>
+
+<!-- SUB TAB ĐẦUĐUÔI -->
+<div class="subtabs-dd" style="display:none;">
+    <div class="subtab-dd active" data-dd-type="dau">Đầu</div>
+    <div class="subtab-dd" data-dd-type="duoi">Đuôi</div>
+</div>
+
+<!-- XIÊN -->
+<div id="xienBox" style="display:none">
+
+<!-- SUB TAB XIÊN -->
+<div class="subtabs" style="margin-top:15px;">
+    <div class="subtab-xien active" data-x="2">Xiên 2</div>
+    <div class="subtab-xien" data-x="3">Xiên 3</div>
+    <div class="subtab-xien" data-x="4">Xiên 4</div>
+</div>
+
+<!-- MODE -->
+<div class="mode-tabs-xien">
+    <div class="mode-xien" data-mode="input">Con số</div>
+    <div class="mode-xien active" data-mode="chon">Chọn số nhanh</div>
+</div>
+
+<!-- CON SỐ -->
+<div id="xienInput" style="display:none">
+<textarea style="width:100%;height:80px;border-radius:8px;padding:10px;border:1px solid #ccc"></textarea>
+</div>
+
+<!-- CHỌN SỐ NHANH -->
+<div id="xienChon">
+    <div id="xienNumbers" class="numbers"></div>
+</div>
+
+</div>
+
+<!-- ĐÁ ĐỀ -->
+<div id="deBox" style="display:none">
+
+<!-- MODE -->
+<div class="mode-tabs-de">
+    <div class="mode-de active" data-mode="chon-de">Chọn số</div>
+    <div class="mode-de" data-mode="input-de">Con số</div>
+</div>
+
+<!-- CHỌN -->
+<div id="chon-de">
+
+<div class="row">
+<div class="label">Chục</div>
+<div class="numbers" id="de-chuc"></div>
+<div class="actions">
+<button onclick="selectRow('de-chuc','all')">Toàn bộ</button>
+<button onclick="selectRow('de-chuc','tai')">Tài</button>
+<button onclick="selectRow('de-chuc','xiu')">Xỉu</button>
+<button onclick="selectRow('de-chuc','le')">Lẻ</button>
+<button onclick="selectRow('de-chuc','chan')">Chẵn</button>
+<button onclick="clearRow('de-chuc')">Xóa</button>
+</div>
+</div>
+
+<div class="row">
+<div class="label">Đơn vị</div>
+<div class="numbers" id="de-donvi"></div>
+<div class="actions">
+<button onclick="selectRow('de-donvi','all')">Toàn bộ</button>
+<button onclick="selectRow('de-donvi','tai')">Tài</button>
+<button onclick="selectRow('de-donvi','xiu')">Xỉu</button>
+<button onclick="selectRow('de-donvi','le')">Lẻ</button>
+<button onclick="selectRow('de-donvi','chan')">Chẵn</button>
+<button onclick="clearRow('de-donvi')">Xóa</button>
+</div>
+</div>
+
+</div>
+
+<!-- INPUT -->
+<div id="input-de" style="display:none;margin-top:10px;">
+<textarea style="width:100%;height:80px;border-radius:8px;padding:10px;border:1px solid #ccc"></textarea>
+</div>
+
+</div>
+
+<!-- ĐẦUĐUÔI -->
+<div id="ddBox" style="display:none">
+
+<!-- MODE -->
+<div class="mode-tabs-dd">
+    <div class="mode-dd active" data-mode="chon-dd">Chọn số</div>
+    <div class="mode-dd" data-mode="input-dd">Con số</div>
+</div>
+
+<!-- CHỌN -->
+<div id="chon-dd">
+
+<div class="row">
+<div class="label">Chục</div>
+<div class="numbers" id="dd-chuc"></div>
+<div class="actions">
+<button onclick="selectRow('dd-chuc','all')">Toàn bộ</button>
+<button onclick="selectRow('dd-chuc','tai')">Tài</button>
+<button onclick="selectRow('dd-chuc','xiu')">Xỉu</button>
+<button onclick="selectRow('dd-chuc','le')">Lẻ</button>
+<button onclick="selectRow('dd-chuc','chan')">Chẵn</button>
+<button onclick="clearRow('dd-chuc')">Xóa</button>
+</div>
+</div>
+
+</div>
+
+<!-- INPUT -->
+<div id="input-dd" style="display:none;margin-top:10px;">
+<textarea style="width:100%;height:80px;border-radius:8px;padding:10px;border:1px solid #ccc"></textarea>
+</div>
+
+</div>
+
+<!-- MODE BAO -->
+<div class="mode-tabs">
+    <div class="mode active" data-mode="chon">Chọn số</div>
+    <div class="mode" data-mode="input">Con số</div>
+</div>
+
+<!-- CHỌN -->
+<div id="chon">
+
+<div class="row" id="row-ngan" style="display:none;">
+<div class="label">Ngàn</div>
+<div class="numbers" id="ngan"></div>
+<div class="actions">
+<button onclick="selectRow('ngan','all')">Toàn bộ</button>
+<button onclick="selectRow('ngan','tai')">Tài</button>
+<button onclick="selectRow('ngan','xiu')">Xỉu</button>
+<button onclick="selectRow('ngan','le')">Lẻ</button>
+<button onclick="selectRow('ngan','chan')">Chẵn</button>
+<button onclick="clearRow('ngan')">Xóa</button>
+</div>
+</div>
+
+<div class="row" id="row-tram" style="display:none;">
+<div class="label">Trăm</div>
+<div class="numbers" id="tram"></div>
+<div class="actions">
+<button onclick="selectRow('tram','all')">Toàn bộ</button>
+<button onclick="selectRow('tram','tai')">Tài</button>
+<button onclick="selectRow('tram','xiu')">Xỉu</button>
+<button onclick="selectRow('tram','le')">Lẻ</button>
+<button onclick="selectRow('tram','chan')">Chẵn</button>
+<button onclick="clearRow('tram')">Xóa</button>
+</div>
+</div>
+
+<div class="row" id="row-chuc">
+<div class="label">Chục</div>
+<div class="numbers" id="chuc"></div>
+<div class="actions">
+<button onclick="selectRow('chuc','all')">Toàn bộ</button>
+<button onclick="selectRow('chuc','tai')">Tài</button>
+<button onclick="selectRow('chuc','xiu')">Xỉu</button>
+<button onclick="selectRow('chuc','le')">Lẻ</button>
+<button onclick="selectRow('chuc','chan')">Chẵn</button>
+<button onclick="clearRow('chuc')">Xóa</button>
+</div>
+</div>
+
+<div class="row" id="row-donvi">
+<div class="label">Đơn vị</div>
+<div class="numbers" id="donvi"></div>
+<div class="actions">
+<button onclick="selectRow('donvi','all')">Toàn bộ</button>
+<button onclick="selectRow('donvi','tai')">Tài</button>
+<button onclick="selectRow('donvi','xiu')">Xỉu</button>
+<button onclick="selectRow('donvi','le')">Lẻ</button>
+<button onclick="selectRow('donvi','chan')">Chẵn</button>
+<button onclick="clearRow('donvi')">Xóa</button>
+</div>
+</div>
+
+</div>
+
+<!-- INPUT -->
+<div id="input" style="display:none;margin-top:10px;">
+<textarea style="width:100%;height:80px;border-radius:8px;padding:10px;border:1px solid #ccc"></textarea>
+</div>
+
+<!-- INFO -->
+<div class="info">
+<div>
+<span class="badge">Tỉ lệ: 1 = <span id="rate">99.9</span></span><br>
+Đã chọn: <b id="count">0</b> mục |
+Số tiền: <b id="money">0</b> đ
+</div>
+
+<div>
+<button onclick="minus()">-</button>
+<span id="multi">1</span>
+<button onclick="plus()">+</button>
+
+<button class="btn blue">Cược ngay</button>
+<button class="btn orange">Thêm số</button>
+<button class="btn gray" onclick="resetAll()">Cài lại</button>
+</div>
+</div>
+
+<div class="table">Không có dữ liệu</div>
+
+</div>
+</div>
+
+<!-- RIGHT -->
+<div class="right">
+<div id="kq"></div>
+</div>
+
+</div>
+
+<script>
+let rate = 27000;
+let multi = 1;
+let type = 2;
+let mainTab = "bao"; // bao | xien | de | dd
+let deRate = 1000;
+let ddRate = 1000;
+
+/* render số */
+function render(id){
+    let box=document.getElementById(id);
+    box.innerHTML="";
+    for(let i=0;i<=9;i++){
+        let s=document.createElement("span");
+        s.innerText=i;
+        s.onclick=()=>{s.classList.toggle("active");if(mainTab==="de"){calcDe()}else if(mainTab==="dd"){calcDD()}else{calc()};}
+        box.appendChild(s);
+    }
+}
+render ("ngan");
+render ("tram");
+render("chuc");
+render("donvi");
+render("de-chuc");
+render("de-donvi");
+render("dd-chuc");
+
+
+// gán giá trị cho tab lớn lô - xiên  - đề - đầuđuôi
+document.querySelectorAll(".tab").forEach((tab, index)=>{
+    tab.onclick = ()=>{
+
+        document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+        tab.classList.add("active");
+
+        // Ẩn tất cả
+        document.getElementById("chon").style.display="none";
+        document.getElementById("input").style.display="none";
+        document.getElementById("xienBox").style.display="none";
+        document.getElementById("deBox").style.display="none";
+        document.getElementById("ddBox").style.display="none";
+
+        document.querySelector(".subtabs").style.display="none";
+        document.querySelector(".subtabs-de").style.display="none";
+        document.querySelector(".subtabs-dd").style.display="none";
+        document.querySelectorAll(".mode-tabs").forEach(m=>m.style.display="none");
+        document.querySelector(".mode-tabs-de").style.display="none";
+        document.querySelector(".mode-tabs-dd").style.display="none";
+
+        if(index === 0){
+            mainTab = "bao";
+
+            document.getElementById("chon").style.display="block";
+            document.querySelector(".subtabs").style.display="flex";
+            document.querySelectorAll(".mode-tabs")[0].style.display="flex";
+            rate = 27000;
+            document.getElementById("rate").innerText = rate.toLocaleString();
+            resetAll();
+        }
+
+        if(index === 1){
+            mainTab = "xien";
+
+            document.getElementById("xienBox").style.display="block";
+
+            // 👉 reset khi vào xiên
+            resetXien();
+        }
+
+        if(index === 2){
+            mainTab = "de";
+            document.getElementById("deBox").style.display="block";
+            document.querySelector(".subtabs-de").style.display="flex";
+            document.querySelector(".mode-tabs-de").style.display="flex";
+            document.getElementById("rate").innerText = deRate.toLocaleString();
+            resetDe();
+        }
+
+        if(index === 3){
+            mainTab = "dd";
+            document.getElementById("ddBox").style.display="block";
+            document.querySelector(".subtabs-dd").style.display="flex";
+            document.querySelector(".mode-tabs-dd").style.display="flex";
+            document.getElementById("rate").innerText = ddRate.toLocaleString();
+            resetDD();
+        }
+    }
+});
+
+function resetXien(){
+    selectedXien=[];
+    document.querySelectorAll("#xienNumbers span").forEach(n=>{
+        n.classList.remove("active","disabled");
+    });
+
+    document.getElementById("count").innerText = 0;
+    document.getElementById("money").innerText = 0;
+}
+
+function resetDe(){
+    clearRow("de-chuc");
+    clearRow("de-donvi");
+    multi = 1;
+    document.getElementById("multi").innerText = multi;
+    calcDe();
+}
+
+function resetDD(){
+    clearRow("dd-chuc");
+    multi = 1;
+    document.getElementById("multi").innerText = multi;
+    calcDD();
+}
+
+/* tab click bao lô */
+document.querySelectorAll(".subtab").forEach(tab=>{
+    tab.onclick=()=>{
+        document.querySelectorAll(".subtab").forEach(t=>t.classList.remove("active"));
+        tab.classList.add("active");
+
+        rate = parseInt(tab.dataset.rate);
+        type = parseInt(tab.dataset.type);
+
+        document.getElementById("rate").innerText = rate.toLocaleString();
+
+        // show / hide hàng
+        document.getElementById("row-ngan").style.display = "none";
+        document.getElementById("row-tram").style.display = "none";
+
+        // theo type
+        if(type == 3){
+            document.getElementById("row-tram").style.display = "block";
+        }
+        else if(type == 4){
+            document.getElementById("row-tram").style.display = "block";
+            document.getElementById("row-ngan").style.display = "block";
+        }
+        calc();
+    }
+});
+
+/* tab click đề */
+document.querySelectorAll(".subtab-de").forEach(tab=>{
+    tab.onclick=()=>{
+        document.querySelectorAll(".subtab-de").forEach(t=>t.classList.remove("active"));
+        tab.classList.add("active");
+
+        deRate = 1000;
+        document.getElementById("rate").innerText = deRate.toLocaleString();
+        resetDe();
+    }
+});
+
+/* tab click đầu đuôi */
+document.querySelectorAll(".subtab-dd").forEach(tab=>{
+    tab.onclick=()=>{
+        document.querySelectorAll(".subtab-dd").forEach(t=>t.classList.remove("active"));
+        tab.classList.add("active");
+
+        ddRate = 1000;
+        document.getElementById("rate").innerText = ddRate.toLocaleString();
+        resetDD();
+    }
+});
+
+/* mode bao lô */
+document.querySelectorAll(".mode").forEach(m=>{
+    m.onclick=()=>{
+        let modeGroup = m.parentElement;
+        modeGroup.querySelectorAll(".mode").forEach(x=>x.classList.remove("active"));
+        m.classList.add("active");
+
+        let mode=m.dataset.mode;
+        
+        if(mode == "chon"){
+            document.getElementById("chon").style.display="block";
+            document.getElementById("input").style.display="none";
+        }
+        else if(mode == "input"){
+            document.getElementById("chon").style.display="none";
+            document.getElementById("input").style.display="block";
+        }
+    }
+});
+
+/* mode đề */
+document.querySelectorAll(".mode-de").forEach(m=>{
+    m.onclick=()=>{
+        let modeGroup = m.parentElement;
+        modeGroup.querySelectorAll(".mode-de").forEach(x=>x.classList.remove("active"));
+        m.classList.add("active");
+
+        let mode=m.dataset.mode;
+        
+        if(mode == "chon-de"){
+            document.getElementById("chon-de").style.display="block";
+            document.getElementById("input-de").style.display="none";
+        }
+        else if(mode == "input-de"){
+            document.getElementById("chon-de").style.display="none";
+            document.getElementById("input-de").style.display="block";
+        }
+    }
+});
+
+/* mode đầu đuôi */
+document.querySelectorAll(".mode-dd").forEach(m=>{
+    m.onclick=()=>{
+        let modeGroup = m.parentElement;
+        modeGroup.querySelectorAll(".mode-dd").forEach(x=>x.classList.remove("active"));
+        m.classList.add("active");
+
+        let mode=m.dataset.mode;
+        
+        if(mode == "chon-dd"){
+            document.getElementById("chon-dd").style.display="block";
+            document.getElementById("input-dd").style.display="none";
+        }
+        else if(mode == "input-dd"){
+            document.getElementById("chon-dd").style.display="none";
+            document.getElementById("input-dd").style.display="block";
+        }
+    }
+});
+
+/* chọn */
+function selectRow(id,type){
+    let nums=document.querySelectorAll("#"+id+" span");
+    nums.forEach(n=>{
+        let v=parseInt(n.innerText);
+
+        if(type=="all") n.classList.add("active");
+        if(type=="tai") n.classList.toggle("active",v>=5);
+        if(type=="xiu") n.classList.toggle("active",v<5);
+        if(type=="le") n.classList.toggle("active",v%2==1);
+        if(type=="chan") n.classList.toggle("active",v%2==0);
+    });
+    
+    if(mainTab === "de"){
+        calcDe();
+    } else if(mainTab === "dd"){
+        calcDD();
+    } else {
+        calc();
+    }
+}
+
+function clearRow(id){
+    document.querySelectorAll("#"+id+" span")
+    .forEach(n=>n.classList.remove("active"));
+    
+    if(mainTab === "de"){
+        calcDe();
+    } else if(mainTab === "dd"){
+        calcDD();
+    } else {
+        calc();
+    }
+}
+
+/* tính */
+function calc(){
+    let c = document.querySelectorAll("#chuc .active").length;
+    let d = document.querySelectorAll("#donvi .active").length;
+
+    let t = 1;
+    let n = 1;
+
+    if(type >= 3){
+        t = document.querySelectorAll("#tram .active").length;
+        if(t === 0){ updateZero(); return; }
+    }
+
+    if(type >= 4){
+        n = document.querySelectorAll("#ngan .active").length;
+        if(n === 0){ updateZero(); return; }
+    }
+
+    if(c === 0 || d === 0){
+        updateZero();
+        return;
+    }
+
+    let count = c * d * t * n;
+    let money = count * rate * multi;
+
+    document.getElementById("count").innerText = count;
+    document.getElementById("money").innerText = money.toLocaleString();
+}
+
+function calcDe(){
+    let c = document.querySelectorAll("#de-chuc .active").length;
+    let d = document.querySelectorAll("#de-donvi .active").length;
+
+    if(c === 0 || d === 0){
+        updateZero();
+        return;
+    }
+
+    let count = c * d;
+    let money = count * deRate * multi;
+
+    document.getElementById("count").innerText = count;
+    document.getElementById("money").innerText = money.toLocaleString();
+}
+
+function calcDD(){
+    let c = document.querySelectorAll("#dd-chuc .active").length;
+
+    if(c === 0){
+        updateZero();
+        return;
+    }
+
+    let count = c;
+    let money = count * ddRate * multi;
+
+    document.getElementById("count").innerText = count;
+    document.getElementById("money").innerText = money.toLocaleString();
+}
+
+function updateZero(){
+    document.getElementById("count").innerText = 0;
+    document.getElementById("money").innerText = 0;
+}
+
+/* nhân */
+function plus(){multi++;update()}
+function minus(){if(multi>1)multi--;update()}
+function update(){
+    document.getElementById("multi").innerText=multi;
+    if(mainTab === "de"){
+        calcDe();
+    } else if(mainTab === "dd"){
+        calcDD();
+    } else {
+        calc();
+    }
+}
+
+/* reset */
+function resetAll(){
+    clearRow("ngan");
+    clearRow("tram");
+    clearRow("chuc");
+    clearRow("donvi");
+    multi=1;
+    update();
+}
+
+/* embed kết quả */
+document.getElementById("kq").innerHTML=`
+<script src="//www.minhngoc.net.vn/jquery/jquery-1.7.2.js"><\/script>
+<link rel="stylesheet" href="//www.minhngoc.net.vn/style/bangketqua_mini.css"/>
+<div id="box_kqxs_minhngoc">
+<script>
+bgcolor="#fff";
+titlecolor="#333";
+dbcolor="#000";
+fsize="12px";
+kqwidth="100%";
+<\/script>
+<script src="//www.minhngoc.net.vn/getkqxs/mien-bac.js"><\/script>
+</div>`;
+
+// pop up cách chơi
+function openGuide(){
+    let title = "";
+    let content = "";
+
+    if(mainTab === "bao"){
+        title = "🎯 Bao lô";
+        content = `
+        Bao lô: Chọn số theo hàng (2, 3 hoặc 4 số).<br><br>
+        Trúng khi số xuất hiện trong kết quả xổ số.<br><br>
+        Tiền thắng tính theo số lần xuất hiện (nháy).
+        `;
+    }
+
+    if(mainTab === "xien"){
+        title = "🎯 Lô xiên";
+        content = `
+        Lô xiên: Chọn từ 2 - 4 số.<br><br>
+        Phải trúng đủ tất cả các số đã chọn mới thắng.<br><br>
+        Tỷ lệ thưởng cao hơn nhưng khó trúng hơn.
+        `;
+    }
+
+    if(mainTab === "de"){
+        title = "🎯 Đánh đề";
+        content = `
+        Đánh đề: Chọn 2 số cuối (Chục & Đơn vị).<br><br>
+        Có 5 loại đề: Đặc biệt, Giải 7, Giải nhất, và các loại đầu.<br><br>
+        Trúng → ăn theo tỷ lệ đề (1000 VNĐ/mục).
+        `;
+    }
+
+    if(mainTab === "dd"){
+        title = "🎯 Đầu Đuôi";
+        content = `
+        Đầu Đuôi: Chọn chữ số hàng chục.<br><br>
+        Có 2 loại: Đầu và Đuôi.<br><br>
+        Chọn 1 mục = 1000 VNĐ.
+        `;
+    }
+
+    document.getElementById("guideTitle").innerHTML = title;
+    document.querySelector("#guideModal p").innerHTML = content;
+    document.getElementById("guideModal").style.display = "flex";
+}
+
+function closeGuide(){
+    document.getElementById("guideModal").style.display = "none";
+}
+
+let xienType = 2;
+let selectedXien = [];
+
+/* render 00-99 */
+function renderXien(){
+    let box = document.getElementById("xienNumbers");
+    box.innerHTML="";
+    for(let i=0;i<=99;i++){
+        let s=document.createElement("span");
+        s.innerText = i.toString().padStart(2,'0');
+
+        s.onclick=()=>{
+            if(s.classList.contains("disabled")) return;
+
+            if(s.classList.contains("active")){
+                s.classList.remove("active");
+                selectedXien = selectedXien.filter(x=>x!=s.innerText);
+            }else{
+                if(selectedXien.length >= xienType) return;
+                s.classList.add("active");
+                selectedXien.push(s.innerText);
+            }
+
+            updateXienUI();
+            calcXien();
+        }
+
+        box.appendChild(s);
+    }
+}
+renderXien();
+
+/* subtab xiên */
+document.querySelectorAll(".subtab-xien").forEach(tab=>{
+    tab.onclick=()=>{
+        document.querySelectorAll(".subtab-xien").forEach(t=>t.classList.remove("active"));
+        tab.classList.add("active");
+
+        xienType = parseInt(tab.dataset.x);
+
+        // 👉 RESET sạch
+        resetXien();
+
+        // ❌ KHÔNG auto nữa
+    }
+});
+
+/* mode xiên */
+document.querySelectorAll(".mode-xien").forEach(m=>{
+    m.onclick=()=>{
+        document.querySelectorAll(".mode-xien").forEach(x=>x.classList.remove("active"));
+        m.classList.add("active");
+
+        let mode = m.dataset.mode;
+
+        document.getElementById("xienInput").style.display = mode=="input"?"block":"none";
+        document.getElementById("xienChon").style.display = mode=="chon"?"block":"none";
+
+        // 👉 AUTO chọn khi vào tab chọn số nhanh
+        if(mode=="chon"){
+            quickPick();
+        }
+    }
+});
+
+/* disable số khi đủ */
+function updateXienUI(){
+    let nums = document.querySelectorAll("#xienNumbers span");
+
+    if(selectedXien.length >= xienType){
+        nums.forEach(n=>{
+            if(!n.classList.contains("active")){
+                n.classList.add("disabled");
+            }
+        });
+    }else{
+        nums.forEach(n=>n.classList.remove("disabled"));
+    }
+}
+
+/* reset */
+function resetXien(){
+    selectedXien=[];
+    document.querySelectorAll("#xienNumbers span").forEach(n=>{
+        n.classList.remove("active","disabled");
+    });
+    calcXien();
+}
+
+/* chọn nhanh */
+function quickPick(){
+    resetXien();
+
+    let arr = [];
+    while(arr.length < xienType){
+        let num = Math.floor(Math.random()*100).toString().padStart(2,'0');
+        if(!arr.includes(num)) arr.push(num);
+    }
+
+    selectedXien = arr;
+
+    document.querySelectorAll("#xienNumbers span").forEach(n=>{
+        if(arr.includes(n.innerText)){
+            n.classList.add("active");
+        }
+    });
+
+    updateXienUI();
+    calcXien();
+}
+
+/* tính tiền */
+function calcXien(){
+    let count = selectedXien.length === xienType ? 1 : 0;
+    let money = count * 1000 * multi;
+
+    document.getElementById("count").innerText = count;
+    document.getElementById("money").innerText = money.toLocaleString();
+}
+</script>
+<!-- POPUP -->
+<div id="guideModal" style="
+    display:none;
+    position:fixed;
+    top:0;left:0;
+    width:100%;height:100%;
+    background:rgba(0,0,0,0.4);
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+">
+
+<div style="
+    width:500px;
+    background:#fff;
+    border-radius:12px;
+    padding:20px;
+    position:relative;
+">
+
+    <!-- CLOSE -->
+    <span onclick="closeGuide()" style="
+        position:absolute;
+        right:15px;top:10px;
+        cursor:pointer;font-size:18px;
+    ">✕</span>
+
+    <!-- TITLE -->
+    <h3 id="guideTitle" style="margin-top:0;"></h3>
+
+    <!-- CONTENT -->
+    <p style="line-height:1.6;color:#555;"></p>
+
+</div>
+</div>
+</body>
+</html>
