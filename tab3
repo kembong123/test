@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xổ Số Pro Max AI</title>
+
+<style>
+:root{
+  --main:#7a1f2b;
+  --main-soft:#a83244;
+  --bg1:#020617;
+  --bg2:#0f172a;
+  --card:rgba(30,41,59,0.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'Segoe UI',system-ui;
+  background: radial-gradient(circle at top,var(--bg2),var(--bg1));
+  color:#fff;
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  position:relative;
+  z-index:99999;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 18px;
+  backdrop-filter: blur(12px);
+  background:rgba(2,6,23,0.7);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.logo{
+  font-weight:700;
+  color:var(--main-soft);
+  text-shadow:0 0 10px rgba(168,50,68,.5);
+}
+.wallet{
+  background:var(--card);
+  padding:6px 10px;
+  border-radius:10px;
+  font-size:13px;
+  min-width:60px;
+  text-align:center;
+}
+
+/* BUTTON */
+.btn{
+  background:linear-gradient(135deg,var(--main),var(--main-soft));
+  border:none;
+  padding:5px 9px;
+  font-size:12px;
+  border-radius:7px;
+  cursor:pointer;
+  font-weight:700;
+  color:#fff;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 4px 12px rgba(0,0,0,0.5);
+  transition:all .25s ease;
+}
+
+.btn:hover{
+  transform:translateY(-2px) scale(1.05);
+  box-shadow:0 10px 25px rgba(0,0,0,0.7);
+}
+
+.btn:active{
+  transform:scale(0.96);
+}
+
+.btn::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-120%;
+  width:100%;
+  height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.4),transparent);
+  transition:.6s;
+}
+
+.btn:hover::after{
+  left:120%;
+}
+
+/* APP */
+.app{
+  max-width:1400px;
+  margin:0 auto;
+  padding:0 12px;
+}
+
+/* MAIN CONTAINER */
+.main-container{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  padding:14px 0;
+}
+
+@media(max-width:1200px){
+  .main-container{
+    grid-template-columns:1fr;
+  }
+}
+
+/* CARD */
+.card{
+  background:var(--card);
+  padding:14px;
+  border-radius:14px;
+  backdrop-filter: blur(12px);
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 10px 35px rgba(0,0,0,.5);
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 25px rgba(122,31,43,.3);
+}
+
+/* BONUS */
+.bonus{
+  background: linear-gradient(90deg,#7a1f2b,#a83244);
+  color:#fff;
+  padding:10px;
+  border-radius:10px;
+  text-align:center;
+  font-weight:800;
+  box-shadow:0 0 25px rgba(122,31,43,.9);
+  animation: glow 2s infinite;
+}
+
+@keyframes glow{
+  50%{box-shadow:0 0 40px rgba(122,31,43,1);}
+}
+
+/* BET */
+.bet-item{
+  display:flex;
+  justify-content:space-between;
+  background:#1e293b;
+  padding:10px;
+  margin:6px 0;
+  border-radius:8px;
+  border-left:4px solid var(--main);
+  transition:.2s;
+}
+
+.bet-item:hover{
+  transform:translateX(4px);
+  background:#111827;
+}
+
+/* INPUT */
+input,select{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border-radius:10px;
+  border:1px solid #1f2937;
+  background:#0f172a;
+  color:#fff;
+  transition:.2s;
+}
+
+input:focus{
+  outline:none;
+  border-color:var(--main-soft);
+  box-shadow:0 0 10px rgba(168,50,68,.6);
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,.8);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-box{
+  background:#0f172a;
+  padding:18px;
+  border-radius:14px;
+  width:92%;
+  max-width:420px;
+  box-shadow:0 0 30px rgba(0,0,0,.8);
+}
+
+/* CHAT */
+#chatBox{
+  height:200px;
+  overflow:auto;
+  background:#020617;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.05);
+}
+
+.chat-user{color:#38bdf8}
+.chat-ai{color:#f87171;animation:fadeIn .4s ease;}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(5px)}
+  to{opacity:1; transform:translateY(0)}
+}
+
+/* LEFT PANEL - LOTTERY */
+.left-panel{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  max-height:900px;
+  overflow-y:auto;
+}
+
+/* RIGHT PANEL - RESULTS */
+.right-panel{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  max-height:900px;
+  overflow-y:auto;
+}
+
+/* LOTTERY STYLES FROM TAB1 */
+.lottery-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 20px;
+  background:#fff;
+  border-bottom:1px solid #ddd;
+  border-radius:12px;
+}
+
+.lottery-header b{
+  color:#2d6cdf;
+  font-size:16px;
+}
+
+.balls{
+  display:flex;
+  gap:5px;
+}
+
+.balls span{
+  width:42px;
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  color:#fff;
+  font-weight:bold;
+  background:linear-gradient(145deg,#5a9df9,#2d6cdf);
+}
+
+.lottery-box{
+  background:#fff;
+  border-radius:12px;
+  padding:15px;
+  color:#333;
+}
+
+.tabs{
+  display:flex;
+  gap:10px;
+  border-bottom:1px solid #eee;
+  padding-bottom:10px;
+  overflow-x:auto;
+}
+
+.tab{
+  cursor:pointer;
+  padding:8px 12px;
+  border-radius:6px;
+  white-space:nowrap;
+  font-size:13px;
+}
+
+.tab.active{
+  background:#e7f0ff;
+  color:#2d6cdf;
+  font-weight:bold;
+}
+
+.subtabs{
+  margin-top:10px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.subtab,.subtab-de,.subtab-dd,.subtab-3c,.subtab-xien{
+  background:#f0f2f6;
+  padding:6px 12px;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.subtab.active,.subtab-de.active,.subtab-dd.active,.subtab-3c.active,.subtab-xien.active{
+  background:#2d6cdf;
+  color:white;
+}
+
+.row{
+  margin-top:15px;
+}
+
+.label{
+  margin-bottom:5px;
+  color:#555;
+  font-weight:bold;
+  font-size:13px;
+}
+
+.numbers{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+}
+
+.numbers span{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:1px solid #ccc;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  background:#fff;
+  transition:0.2s;
+  font-size:12px;
+}
+
+.numbers span:hover{
+  border-color:#2d6cdf;
+}
+
+.numbers span.active{
+  background:#2d6cdf;
+  color:#fff;
+  border:none;
+  box-shadow:0 3px 8px rgba(0,0,0,0.15);
+}
+
+.numbers span.disabled{
+  opacity:0.3;
+  pointer-events:none;
+}
+
+.actions{
+  margin-top:5px;
+  display:flex;
+  gap:5px;
+  flex-wrap:wrap;
+}
+
+.actions button{
+  margin:2px;
+  padding:5px 8px;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+  background:#e6ebf5;
+  font-size:11px;
+}
+
+.actions button:hover{
+  background:#2d6cdf;
+  color:#fff;
+}
+
+.mode-tabs,.mode-tabs-de,.mode-tabs-dd,.mode-tabs-3c,.mode-tabs-4c,.mode-tabs-xien{
+  margin-top:10px;
+  display:flex;
+  gap:10px;
+  justify-content:flex-end;
+  flex-wrap:wrap;
+}
+
+.mode,.mode-de,.mode-dd,.mode-3c,.mode-4c,.mode-xien{
+  padding:6px 12px;
+  border-radius:6px;
+  background:#eee;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.mode.active,.mode-de.active,.mode-dd.active,.mode-3c.active,.mode-4c.active,.mode-xien.active{
+  background:#2d6cdf;
+  color:#fff;
+}
+
+.info{
+  margin-top:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.badge{
+  background:#e7f0ff;
+  padding:5px 10px;
+  border-radius:6px;
+  color:#2d6cdf;
+  font-weight:bold;
+  font-size:12px;
+}
+
+.btn-group{
+  display:flex;
+  gap:5px;
+  flex-wrap:wrap;
+}
+
+.btn-group .btn{
+  padding:6px 10px;
+  font-size:11px;
+}
+
+.table-section{
+  margin-top:15px;
+  padding:15px;
+  text-align:center;
+  color:#888;
+  border-top:1px solid #eee;
+}
+
+/* RESULTS PANEL */
+.kq-header{
+  padding:15px;
+  background:#fff;
+  border-radius:12px;
+  color:#333;
+  font-weight:bold;
+  border-bottom:1px solid #ddd;
+}
+
+.kq-content{
+  background:#fff;
+  border-radius:12px;
+  padding:15px;
+  color:#333;
+  min-height:300px;
+}
+
+#authButtons{
+  display:flex;
+  gap:6px;
+  align-items:center;
+}
+
+#authButtons .btn{
+  padding:6px 10px;
+  font-size:12px;
+  border-radius:8px;
+  white-space:nowrap;
+}
+
+/* AUTH BUTTONS */
+.promo-overlay{
+  position:fixed;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,0,0,.7);
+  z-index:999;
+}
+
+.promo-modal{
+  background:#0f172a;
+  padding:20px;
+  border-radius:14px;
+  width:90%;
+  max-width:360px;
+  color:#fff;
+  text-align:center;
+}
+
+.promo-close{
+  position:absolute;
+  top:10px;
+  right:12px;
+  background:#000;
+  border:none;
+  color:#fff;
+  cursor:pointer;
+}
+
+.promo-form{
+  display:grid;
+  gap:10px;
+  text-align:left;
+}
+
+.promo-form input{
+  width:100%;
+  padding:10px 12px;
+  border-radius:10px;
+  background:#020617;
+  border:1px solid #334155;
+  color:#fff;
+  font-size:14px;
+  transition:.2s;
+}
+
+.promo-form input::placeholder{
+  color:#94a3b8;
+}
+
+.promo-form input:focus{
+  outline:none;
+  border-color:#38bdf8;
+  box-shadow:0 0 0 2px rgba(56,189,248,.25);
+}
+
+.promo-form label{
+  font-size:13px;
+  color:#cbd5f5;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.promo-btn{
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:linear-gradient(90deg,#4C9EEA,#50BDFF);
+  color:#000;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.gift-icon {
+  display:inline-block;
+  animation: shakeSoft 2s infinite ease-in-out;
+}
+
+@keyframes shakeSoft {
+  0%,100% { transform: rotate(0deg); }
+  25% { transform: rotate(3deg); }
+  50% { transform: rotate(-3deg); }
+  75% { transform: rotate(2deg); }
+}
+
+.gift-icon.active {
+  animation: shakeStrong 0.5s ease;
+}
+
+@keyframes shakeStrong {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(8deg); }
+  40% { transform: rotate(-8deg); }
+  60% { transform: rotate(6deg); }
+  80% { transform: rotate(-6deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.user-menu{
+  position:relative;
+  cursor:pointer;
+  z-index:1000;
+}
+
+.user-dropdown{
+  position:absolute;
+  top:35px;
+  right:0;
+  background:#0f172a;
+  border-radius:10px;
+  min-width:160px;
+  box-shadow:0 10px 30px rgba(0,0,0,.6);
+  display:none;
+  flex-direction:column;
+  overflow:hidden;
+  z-index:9999;
+}
+
+.user-dropdown div{
+  padding:10px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  cursor:pointer;
+}
+
+.user-dropdown div:hover{
+  background:#1e293b;
+}
+
+#gift-popup {
+  position:fixed;
+  top:70px;
+  right:20px;
+  background:#fff;
+  color:#000;
+  padding:16px;
+  border-radius:12px;
+  width:260px;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
+  display:none;
+  z-index:1000;
+}
+
+@media(max-width:600px){
+  .main-container{
+    grid-template-columns:1fr;
+  }
+
+  .left-panel,.right-panel{
+    max-height:none;
+  }
+
+  .tabs{
+    font-size:12px;
+  }
+
+  .numbers span{
+    width:32px;
+    height:32px;
+    font-size:11px;
+  }
+
+  #authButtons .btn{
+    padding:5px 8px;
+    font-size:11px;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">🔥 XỔ SỐ PRO MAX AI</div>
+
+  <div style="display:flex;gap:10px;align-items:center">
+    <div id="userBox" class="user-menu"></div>
+    <span class="wallet">💰 <span id="balance">0</span>đ</span>
+
+    <div id="authButtons">
+      <button class="btn" onclick="openRegister()">Đăng ký</button>
+      <button class="btn" onclick="openLogin()">Đăng nhập</button>
+    </div>
+
+    <button class="btn" onclick="openPromo()">Nạp</button>
+    <button class="btn" style="background:#22c55e" onclick="withdraw()">Rút</button>
+    <div class="gift-icon" onclick="event.stopPropagation(); openGiftPopup();" style="position:relative;cursor:pointer">
+      🎁
+      <span id="giftBadge" style="position:absolute;top:-6px;right:-6px;background:#22c55e;color:#000;font-size:11px;font-weight:700;padding:2px 5px;border-radius:50%;">1</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-container">
+
+<!-- LEFT PANEL - LOTTERY INTERFACE -->
+<div class="left-panel">
+  <div class="lottery-header">
+    <div>
+      <b>Miền Bắc</b><br>
+      <span style="font-size:12px;color:#666;">Kết quả 06/05/2026</span>
+    </div>
+    <div class="balls">
+      <span>1</span><span>1</span><span>2</span><span>5</span><span>1</span>
+    </div>
+  </div>
+
+  <div class="lottery-box">
+    <!-- MAIN TAB -->
+    <div class="tabs">
+      <div class="tab active" onclick="switchMainTab(0)">Bao lô</div>
+      <div class="tab" onclick="switchMainTab(1)">Lô xiên</div>
+      <div class="tab" onclick="switchMainTab(2)">Đánh đề</div>
+      <div class="tab" onclick="switchMainTab(3)">Đầu Đuôi</div>
+      <div class="tab" onclick="switchMainTab(4)">3 Càng</div>
+      <div class="tab" onclick="switchMainTab(5)">4 Càng</div>
+      <span onclick="openGuide()" style="cursor:pointer;color:#2d6cdf;font-size:12px;">ℹ️ Cách chơi</span>
+    </div>
+
+    <!-- SUB TAB BAO LÔ -->
+    <div class="subtabs" id="subtabs-bao" style="margin-top:15px;">
+      <div class="subtab active" data-type="2" data-rate="27000">Lô 2 số</div>
+      <div class="subtab" data-type="2" data-rate="23000">Lô 2 số đầu</div>
+      <div class="subtab" data-type="2" data-rate="1000">Lô 2 số 1K</div>
+      <div class="subtab" data-type="3" data-rate="23000">Lô 3 số</div>
+      <div class="subtab" data-type="4" data-rate="20000">Lô 4 số</div>
+    </div>
+
+    <!-- SUB TAB ĐỀ -->
+    <div class="subtabs" id="subtabs-de" style="display:none;">
+      <div class="subtab-de active" data-de-type="db">Đề đặc biệt</div>
+      <div class="subtab-de" data-de-type="db-dau">Đề đầu đặc biệt</div>
+      <div class="subtab-de" data-de-type="g7">Đề giải 7</div>
+      <div class="subtab-de" data-de-type="g1">Đề giải nhất</div>
+      <div class="subtab-de" data-de-type="g1-dau">Đề đầu giải nhất</div>
+    </div>
+
+    <!-- SUB TAB ĐẦUĐUÔI -->
+    <div class="subtabs" id="subtabs-dd" style="display:none;">
+      <div class="subtab-dd active" data-dd-type="dau">Đầu</div>
+      <div class="subtab-dd" data-dd-type="duoi">Đuôi</div>
+    </div>
+
+    <!-- SUB TAB 3 CÀNG -->
+    <div class="subtabs" id="subtabs-3c" style="display:none;">
+      <div class="subtab-3c active" data-3c-type="db" data-3c-rate="1000">3 Càng Đặc Biệt</div>
+      <div class="subtab-3c" data-3c-type="g1" data-3c-rate="1000">3 Càng Giải Nhất</div>
+      <div class="subtab-3c" data-3c-type="dd" data-3c-rate="4000">3 Càng Đầu Đuôi</div>
+      <div class="subtab-3c" data-3c-type="dau" data-3c-rate="3000">3 Càng Đầu</div>
+    </div>
+
+    <!-- XIÊN BOX -->
+    <div id="xienBox" style="display:none">
+      <div class="subtabs">
+        <div class="subtab-xien active" data-x="2">Xiên 2</div>
+        <div class="subtab-xien" data-x="3">Xiên 3</div>
+        <div class="subtab-xien" data-x="4">Xiên 4</div>
+      </div>
+      <div class="mode-tabs-xien">
+        <div class="mode-xien" data-mode="input">Con số</div>
+        <div class="mode-xien active" data-mode="chon">Chọn số nhanh</div>
+      </div>
+      <div id="xienInput" style="display:none">
+        <textarea style="width:100%;height:80px;border-radius:8px;padding:10px;border:1px solid #ccc"></textarea>
+      </div>
+      <div id="xienChon">
+        <div id="xienNumbers" class="numbers"></div>
+      </div>
+    </div>
+
+    <!-- ĐỀ BOX -->
+    <div id="deBox" style="display:none">
+      <div class="mode-tabs-de">
+        <div class="mode-de active" data-mode="chon-de">Chọn số</div>
+        <div class="mode-de" data-mode="input-de">Con số</div>
+      </div>
+      <div id="chon-de">
+        <div class="row">
+          <div class="label">Chục</div>
+          <div class="numbers" id="de-chuc"></div>
+          <div class="actions">
+            <button onclick="selectRow('de-chuc','all')">Toàn bộ</button>
+            <button onclick="selectRow('de-chuc','tai')">Tài</button>
+            <button onclick="selectRow('de-chuc','xiu')">Xỉu</button>
+            <button onclick="selectRow('de-chuc','le')">Lẻ</button>
+            <button onclick="selectRow('de-chuc','chan')">Chẵn</button>
+            <button onclick="clearRow('de-chuc')">Xóa</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="label">Đơn vị</div>
+          <div class="numbers" id="de-donvi"></div>
+          <div class="actions">
+            <button onclick="selectRow('de-donvi','all')">Toàn bộ</button>
+            <button onclick="selectRow('de-donvi','tai')">Tài</button>
+            <button onclick="selectRow('de-donvi','xiu')">Xỉu</button>
+            <button onclick="selectRow('de-donvi','le')">Lẻ</button>
+            <button onclick="selectRow('de-donvi','chan')">Chẵn</button>
+            <button onclick="clearRow('de-donvi')">Xóa</button>
+          </div>
+        </div>
+      </div>
+      <div id="input-de" style="display:none;margin-top:10px;">
+        <textarea style="width:100%;height:80px;border-radius:8px;padding:10px;border:1px solid #ccc"></textarea>
+      </div>
+    </div>
+
+    <!-- ĐẦUĐUÔI BOX -->
+    <div id="ddBox" style="display:none">
+      <div class="mode-tabs-dd">
+        <div class="mode-dd active" data-mode="chon-dd">Chọn số</div>
+        <div class="mode-dd" data-mode="input-dd">Con số</div>
+      </div>
+      <div id="chon-dd">
+        <div class="row">
+          <div class="label">Chục</div>
+          <div class="numbers" id="dd-chuc"></div>
+          <div class="actions">
+            <button onclick="selectRow('dd-chuc','all')">Toàn bộ</button>
+            <button onclick="selectRow('dd-chuc','tai')">Tài</button>
+            <button onclick="selectRow('dd-chuc','xiu')">Xỉu</button>
+            <button onclick="selectRow('dd-chuc','le')">Lẻ</button>
+            <button onclick="selectRow('dd-chuc','chan')">Chẵn</button>
+            <button onclick="clearRow('dd-chuc')">Xóa</button>
+          </div>
+        </div>
+      </div>
+      <div id="input-dd" style="display:none;margin-top:10px;">
+        <textarea style="width:100%;height:80px;border-radius:8px;padding:10px;border:1px solid #ccc"></textarea>
+      </div>
+    </div>
+
+    <!-- 3 CÀNG BOX -->
+    <div id="3cBox" style="display:none">
+      <div class="mode-tabs-3c">
+        <div class="mode-3c active" data-mode="chon-3c">Chọn số</div>
+        <div class="mode-3c" data-mode="input-3c">Con số</div>
+      </div>
+      <div id="chon-3c">
+        <div class="row">
+          <div class="label">Trăm</div>
+          <div class="numbers" id="3c-tram"></div>
+          <div class="actions">
+            <button onclick="selectRow('3c-tram','all')">Toàn bộ</button>
+            <button onclick="selectRow('3c-tram','tai')">Tài</button>
+            <button onclick="selectRow('3c-tram','xiu')">Xỉu</button>
+            <button onclick="selectRow('3c-tram','le')">Lẻ</button>
+            <button onclick="selectRow('3c-tram','chan')">Chẵn</button>
+            <button onclick="clearRow('3c-tram')">Xóa</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="label">Chục</div>
+          <div class="numbers" id="3c-chuc"></div>
+          <div class="actions">
+            <button onclick="selectRow('3c-chuc','all')">Toàn bộ</button>
+            <button onclick="selectRow('3c-chuc','tai')">Tài</button>
+            <button onclick="selectRow('3c-chuc','xiu')">Xỉu</button>
+            <button onclick="selectRow('3c-chuc','le')">Lẻ</button>
+            <button onclick="selectRow('3c-chuc','chan')">Chẵn</button>
+            <button onclick="clearRow('3c-chuc')">Xóa</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="label">Đơn vị</div>
+          <div class="numbers" id="3c-donvi"></div>
+          <div class="actions">
+            <button onclick="selectRow('3c-donvi','all')">Toàn bộ</button>
+            <button onclick="selectRow('3c-donvi','tai')">Tài</button>
+            <button onclick="selectRow('3c-donvi','xiu')">Xỉu</button>
+            <button onclick="selectRow('3c-donvi','le')">Lẻ</button>
+            <button onclick="selectRow('3c-donvi','chan')">Chẵn</button>
+            <button onclick="clearRow('3c-donvi')">Xóa</button>
+          </div>
+        </div>
+      </div>
+      <div id="input-3c" style="display:none;margin-top:10px;">
+        <textarea style="width:100%;height:80px;border-radius:8px;padding:10px;border:1px solid #ccc"></textarea>
+      </div>
+    </div>
+
+    <!-- 4 CÀNG BOX -->
+    <div id="4cBox" style="display:none">
+      <div class="mode-tabs-4c">
+        <div class="mode-4c active" data-mode="chon-4c">Chọn số</div>
+        <div class="mode-4c" data-mode="input-4c">Con số</div>
+      </div>
+      <div id="chon-4c">
+        <div class="row">
+          <div class="label">Ngàn</div>
+          <div class="numbers" id="4c-ngan"></div>
+          <div class="actions">
+            <button onclick="selectRow('4c-ngan','all')">Toàn bộ</button>
+            <button onclick="selectRow('4c-ngan','tai')">Tài</button>
+            <button onclick="selectRow('4c-ngan','xiu')">Xỉu</button>
+            <button onclick="selectRow('4c-ngan','le')">Lẻ</button>
+            <button onclick="selectRow('4c-ngan','chan')">Chẵn</button>
+            <button onclick="clearRow('4c-ngan')">Xóa</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="label">Trăm</div>
+          <div class="numbers" id="4c-tram"></div>
+          <div class="actions">
+            <button onclick="selectRow('4c-tram','all')">Toàn bộ</button>
+            <button onclick="selectRow('4c-tram','tai')">Tài</button>
+            <button onclick="selectRow('4c-tram','xiu')">Xỉu</button>
+            <button onclick="selectRow('4c-tram','le')">Lẻ</button>
+            <button onclick="selectRow('4c-tram','chan')">Chẵn</button>
+            <button onclick="clearRow('4c-tram')">Xóa</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="label">Chục</div>
+          <div class="numbers" id="4c-chuc"></div>
+          <div class="actions">
+            <button onclick="selectRow('4c-chuc','all')">Toàn bộ</button>
+            <button onclick="selectRow('4c-chuc','tai')">Tài</button>
+            <button onclick="selectRow('4c-chuc','xiu')">Xỉu</button>
+            <button onclick="selectRow('4c-chuc','le')">Lẻ</button>
+            <button onclick="selectRow('4c-chuc','chan')">Chẵn</button>
+            <button onclick="clearRow('4c-chuc')">Xóa</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="label">Đơn vị</div>
+          <div class="numbers" id="4c-donvi"></div>
+          <div class="actions">
+            <button onclick="selectRow('4c-donvi','all')">Toàn bộ</button>
+            <button onclick="selectRow('4c-donvi','tai')">Tài</button>
+            <button onclick="selectRow('4c-donvi','xiu')">Xỉu</button>
+            <button onclick="selectRow('4c-donvi','le')">Lẻ</button>
+            <button onclick="selectRow('4c-donvi','chan')">Chẵn</button>
+            <button onclick="clearRow('4c-donvi')">Xóa</button>
+          </div>
+        </div>
+      </div>
+      <div id="input-4c" style="display:none;margin-top:10px;">
+        <textarea style="width:100%;height:80px;border-radius:8px;padding:10px;border:1px solid #ccc"></textarea>
+      </div>
+    </div>
+
+    <!-- MODE BAO -->
+    <div class="mode-tabs" id="mode-bao">
+      <div class="mode active" data-mode="chon">Chọn số</div>
+      <div class="mode" data-mode="input">Con số</div>
+    </div>
+
+    <!-- CHỌN BAO -->
+    <div id="chon">
+      <div class="row" id="row-ngan" style="display:none;">
+        <div class="label">Ngàn</div>
+        <div class="numbers" id="ngan"></div>
+        <div class="actions">
+          <button onclick="selectRow('ngan','all')">Toàn bộ</button>
+          <button onclick="selectRow('ngan','tai')">Tài</button>
+          <button onclick="selectRow('ngan','xiu')">Xỉu</button>
+          <button onclick="selectRow('ngan','le')">Lẻ</button>
+          <button onclick="selectRow('ngan','chan')">Chẵn</button>
+          <button onclick="clearRow('ngan')">Xóa</button>
+        </div>
+      </div>
+
+      <div class="row" id="row-tram" style="display:none;">
+        <div class="label">Trăm</div>
+        <div class="numbers" id="tram"></div>
+        <div class="actions">
+          <button onclick="selectRow('tram','all')">Toàn bộ</button>
+          <button onclick="selectRow('tram','tai')">Tài</button>
+          <button onclick="selectRow('tram','xiu')">Xỉu</button>
+          <button onclick="selectRow('tram','le')">Lẻ</button>
+          <button onclick="selectRow('tram','chan')">Chẵn</button>
+          <button onclick="clearRow('tram')">Xóa</button>
+        </div>
+      </div>
+
+      <div class="row" id="row-chuc">
+        <div class="label">Chục</div>
+        <div class="numbers" id="chuc"></div>
+        <div class="actions">
+          <button onclick="selectRow('chuc','all')">Toàn bộ</button>
+          <button onclick="selectRow('chuc','tai')">Tài</button>
+          <button onclick="selectRow('chuc','xiu')">Xỉu</button>
+          <button onclick="selectRow('chuc','le')">Lẻ</button>
+          <button onclick="selectRow('chuc','chan')">Chẵn</button>
+          <button onclick="clearRow('chuc')">Xóa</button>
+        </div>
+      </div>
+
+      <div class="row" id="row-donvi">
+        <div class="label">Đơn vị</div>
+        <div class="numbers" id="donvi"></div>
+        <div class="actions">
+          <button onclick="selectRow('donvi','all')">Toàn bộ</button>
+          <button onclick="selectRow('donvi','tai')">Tài</button>
+          <button onclick="selectRow('donvi','xiu')">Xỉu</button>
+          <button onclick="selectRow('donvi','le')">Lẻ</button>
+          <button onclick="selectRow('donvi','chan')">Chẵn</button>
+          <button onclick="clearRow('donvi')">Xóa</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- INPUT BAO -->
+    <div id="input" style="display:none;margin-top:10px;">
+      <textarea style="width:100%;height:80px;border-radius:8px;padding:10px;border:1px solid #ccc;color:#333"></textarea>
+    </div>
+
+    <!-- INFO -->
+    <div class="info">
+      <div>
+        <div class="badge">Tỉ lệ: 1 = <span id="rate">27.000</span></div>
+        <div style="font-size:12px;margin-top:5px;">Đã chọn: <b id="count">0</b> mục | Số tiền: <b id="money">0</b> đ</div>
+      </div>
+      <div class="btn-group">
+        <button class="btn" onclick="minus()">-</button>
+        <span id="multi" style="padding:6px 10px;">1</span>
+        <button class="btn" onclick="plus()">+</button>
+        <button class="btn blue" style="background:#2d6cdf">Cược ngay</button>
+        <button class="btn orange" style="background:#ff8c1a">Thêm số</button>
+        <button class="btn gray" style="background:#ccc;color:#333" onclick="resetAll()">Cài lại</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RIGHT PANEL - RESULTS & DASHBOARD -->
+<div class="right-panel">
+  <div class="bonus" style="border-radius:12px;">
+    <span>🎁 Đăng ký đơn giản</span>
+    <span>🎁 Thưởng nạp x3</span>
+    <span>🎁 Nạp rút 1 phút</span>
+    <span>🎁 Thông tin bảo mật</span>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">📜 Lịch sử đặt cược</h3>
+    <div id="history" class="history"></div>
+    <div id="list"></div>
+    <button class="btn" style="margin-top:10px;width:100%" onclick="goAccount('history')">
+      Xem thêm
+    </button>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">🤖 AI Dự đoán</h3>
+    <div id="chatBox"></div>
+    <input id="userInput" placeholder="Nhập: dự đoán hôm nay..." />
+    <button class="btn" onclick="sendAI()">Gửi</button>
+    <button class="btn" style="margin-top:5px;background:#38bdf8" onclick="randomSo()">🎲 Random</button>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">🔍 Dò số</h3>
+    <input id="checkSo" placeholder="Nhập số">
+    <button class="btn" onclick="checkKetQua()">Dò</button>
+    <div id="checkResult"></div>
+  </div>
+
+  <!-- KẾT QUẢ XỔNG SỐ -->
+  <div class="kq-header">
+    Kết quả Miền Bắc
+  </div>
+  <div class="kq-content" id="kq-content">
+    <div style="text-align:center;padding:40px;color:#999;">
+      Cập nhật kết quả xổ số tự động
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- MODALS -->
+<div class="modal" id="loginModal">
+  <div class="modal-box" style="position:relative">
+    <button onclick="closeModal('loginModal')" style="position:absolute; top:10px; right:12px;background:none; border:none; color:#fff; font-size:18px; cursor:pointer;">✖</button>
+    <h3>Đăng nhập</h3>
+    <input id="loginUser" placeholder="Tài khoản">
+    <input id="loginPass" type="password" placeholder="Mật khẩu">
+    <button class="btn" onclick="login()" style="width:100%;margin-top:10px;">Đăng nhập</button>
+  </div>
+</div>
+
+<div class="modal" id="registerModal">
+  <div class="modal-box" style="max-width:500px; position:relative">
+    <button onclick="closeModal('registerModal')" style="position:absolute; top:10px; right:12px;background:none; border:none; color:#fff; font-size:18px; cursor:pointer;">✖</button>
+    <h3>Đăng ký tài khoản</h3>
+    <div class="promo-form" style="grid-template-columns:1fr 1fr; gap:10px">
+      <input id="regUser" placeholder="Tên tài khoản" required>
+      <input id="regPass" type="password" placeholder="Mật khẩu*" required>
+      <input id="regPass2" type="password" placeholder="Nhập lại mật khẩu*" required>
+      <input id="regPhone" placeholder="Số điện thoại">
+      <input id="regCode" placeholder="Mã khuyến mãi">
+    </div>
+    <button class="btn" style="width:100%;margin-top:12px" onclick="register()">ĐĂNG KÝ</button>
+  </div>
+</div>
+
+<div id="gift-popup">
+  <h4 style="margin:0 0 5px">Phần thưởng nạp tiền</h4>
+  <div style="color:#a00a0a;font-size:20px;font-weight:700;margin-bottom:10px">
+    nạp 1tr nhận 3tr
+  </div>
+  <button class="promo-btn" onclick="goNap()">Nạp Ngay</button>
+</div>
+
+<div class="promo-overlay" id="promo-overlay">
+  <div class="promo-modal">
+    <button class="promo-close" id="promo-close">×</button>
+    <h2>🎁 X3 giá trị nạp</h2>
+    <p>Áp dụng cho các thẻ nạp từ 1 triệu trở lên</p>
+    <form id="promo-form" class="promo-form">
+      <label>Số tiền
+        <input type="number" id="promo-amount" min="1000000" required>
+      </label>
+      <p id="promo-bonus" style="display:none;color:#8ef"></p>
+      <button type="submit" class="promo-btn">Đăng ký & lấy QR</button>
+    </form>
+  </div>
+</div>
+
+<div id="guideModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);justify-content:center;align-items:center;z-index:999;">
+  <div style="width:500px;background:#fff;border-radius:12px;padding:20px;position:relative;color:#333;">
+    <span onclick="closeGuide()" style="position:absolute;right:15px;top:10px;cursor:pointer;font-size:18px;">✕</span>
+    <h3 id="guideTitle" style="margin-top:0;color:#2d6cdf;"></h3>
+    <p id="guideContent" style="line-height:1.6;color:#555;"></p>
+  </div>
+</div>
+
+<script>
+// ===== STATES =====
+let balance = Number(localStorage.getItem("balance")||0);
+let bets = JSON.parse(localStorage.getItem("bets")||"[]");
+let rate = 27000;
+let multi = 1;
+let type = 2;
+let mainTab = "bao";
+let deRate = 1000;
+let ddRate = 1000;
+let rate3c = 1000;
+let rate4c = 1000;
+let selectedXien = [];
+let xienType = 2;
+
+// ===== RENDER NUMBERS =====
+function render(id){
+  let box = document.getElementById(id);
+  if(!box) return;
+  box.innerHTML="";
+  for(let i=0;i<=9;i++){
+    let s=document.createElement("span");
+    s.innerText=i;
+    s.onclick=()=>{
+      s.classList.toggle("active");
+      if(mainTab==="de"){calcDe()}
+      else if(mainTab==="dd"){calcDD()}
+      else if(mainTab==="3c"){calc3C()}
+      else if(mainTab==="4c"){calc4C()}
+      else{calc();}
+    }
+    box.appendChild(s);
+  }
+}
+
+render("ngan");
+render("tram");
+render("chuc");
+render("donvi");
+render("de-chuc");
+render("de-donvi");
+render("dd-chuc");
+render("3c-tram");
+render("3c-chuc");
+render("3c-donvi");
+render("4c-ngan");
+render("4c-tram");
+render("4c-chuc");
+render("4c-donvi");
+
+// ===== SWITCH MAIN TAB =====
+function switchMainTab(index){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  document.querySelectorAll(".tab")[index].classList.add("active");
+
+  document.getElementById("chon").style.display="none";
+  document.getElementById("input").style.display="none";
+  document.getElementById("xienBox").style.display="none";
+  document.getElementById("deBox").style.display="none";
+  document.getElementById("ddBox").style.display="none";
+  document.getElementById("3cBox").style.display="none";
+  document.getElementById("4cBox").style.display="none";
+
+  document.getElementById("subtabs-bao").style.display="none";
+  document.getElementById("subtabs-de").style.display="none";
+  document.getElementById("subtabs-dd").style.display="none";
+  document.getElementById("subtabs-3c").style.display="none";
+  document.getElementById("mode-bao").style.display="none";
+
+  document.querySelectorAll(".mode-tabs-de").forEach(m=>m.style.display="none");
+  document.querySelectorAll(".mode-tabs-dd").forEach(m=>m.style.display="none");
+  document.querySelectorAll(".mode-tabs-3c").forEach(m=>m.style.display="none");
+  document.querySelectorAll(".mode-tabs-4c").forEach(m=>m.style.display="none");
+  document.querySelectorAll(".mode-tabs-xien").forEach(m=>m.style.display="none");
+
+  if(index === 0){
+    mainTab = "bao";
+    document.getElementById("chon").style.display="block";
+    document.getElementById("subtabs-bao").style.display="flex";
+    document.getElementById("mode-bao").style.display="flex";
+    rate = 27000;
+    document.getElementById("rate").innerText = rate.toLocaleString();
+    resetAll();
+  }
+
+  if(index === 1){
+    mainTab = "xien";
+    document.getElementById("xienBox").style.display="block";
+    renderXien();
+    resetXien();
+  }
+
+  if(index === 2){
+    mainTab = "de";
+    document.getElementById("deBox").style.display="block";
+    document.getElementById("subtabs-de").style.display="flex";
+    document.querySelectorAll(".mode-tabs-de")[0].style.display="flex";
+    document.getElementById("rate").innerText = deRate.toLocaleString();
+    resetDe();
+  }
+
+  if(index === 3){
+    mainTab = "dd";
+    document.getElementById("ddBox").style.display="block";
+    document.getElementById("subtabs-dd").style.display="flex";
+    document.querySelectorAll(".mode-tabs-dd")[0].style.display="flex";
+    document.getElementById("rate").innerText = ddRate.toLocaleString();
+    resetDD();
+  }
+
+  if(index === 4){
+    mainTab = "3c";
+    document.getElementById("3cBox").style.display="block";
+    document.getElementById("subtabs-3c").style.display="flex";
+    document.querySelectorAll(".mode-tabs-3c")[0].style.display="flex";
+    document.getElementById("rate").innerText = rate3c.toLocaleString();
+    reset3C();
+  }
+
+  if(index === 5){
+    mainTab = "4c";
+    document.getElementById("4cBox").style.display="block";
+    document.querySelectorAll(".mode-tabs-4c")[0].style.display="flex";
+    document.getElementById("rate").innerText = rate4c.toLocaleString();
+    reset4C();
+  }
+}
+
+// ===== SUBTAB HANDLERS =====
+document.querySelectorAll(".subtab").forEach(tab=>{
+  tab.onclick=()=>{
+    document.querySelectorAll(".subtab").forEach(t=>t.classList.remove("active"));
+    tab.classList.add("active");
+    rate = parseInt(tab.dataset.rate);
+    type = parseInt(tab.dataset.type);
+    document.getElementById("rate").innerText = rate.toLocaleString();
+    document.getElementById("row-ngan").style.display = "none";
+    document.getElementById("row-tram").style.display = "none";
+    if(type == 3) document.getElementById("row-tram").style.display = "block";
+    else if(type == 4){
+      document.getElementById("row-tram").style.display = "block";
+      document.getElementById("row-ngan").style.display = "block";
+    }
+    calc();
+  }
+});
+
+document.querySelectorAll(".subtab-de").forEach(tab=>{
+  tab.onclick=()=>{
+    document.querySelectorAll(".subtab-de").forEach(t=>t.classList.remove("active"));
+    tab.classList.add("active");
+    deRate = 1000;
+    document.getElementById("rate").innerText = deRate.toLocaleString();
+    resetDe();
+  }
+});
+
+document.querySelectorAll(".subtab-dd").forEach(tab=>{
+  tab.onclick=()=>{
+    document.querySelectorAll(".subtab-dd").forEach(t=>t.classList.remove("active"));
+    tab.classList.add("active");
+    ddRate = 1000;
+    document.getElementById("rate").innerText = ddRate.toLocaleString();
+    resetDD();
+  }
+});
+
+document.querySelectorAll(".subtab-3c").forEach(tab=>{
+  tab.onclick=()=>{
+    document.querySelectorAll(".subtab-3c").forEach(t=>t.classList.remove("active"));
+    tab.classList.add("active");
+    rate3c = parseInt(tab.dataset["3c-rate"]);
+    document.getElementById("rate").innerText = rate3c.toLocaleString();
+    reset3C();
+  }
+});
+
+// ===== MODE HANDLERS =====
+document.querySelectorAll(".mode").forEach(m=>{
+  m.onclick=()=>{
+    let modeGroup = m.parentElement;
+    modeGroup.querySelectorAll(".mode").forEach(x=>x.classList.remove("active"));
+    m.classList.add("active");
+    let mode=m.dataset.mode;
+    if(mode == "chon"){
+      document.getElementById("chon").style.display="block";
+      document.getElementById("input").style.display="none";
+    }else if(mode == "input"){
+      document.getElementById("chon").style.display="none";
+      document.getElementById("input").style.display="block";
+    }
+  }
+});
+
+document.querySelectorAll(".mode-de").forEach(m=>{
+  m.onclick=()=>{
+    let modeGroup = m.parentElement;
+    modeGroup.querySelectorAll(".mode-de").forEach(x=>x.classList.remove("active"));
+    m.classList.add("active");
+    let mode=m.dataset.mode;
+    if(mode == "chon-de"){
+      document.getElementById("chon-de").style.display="block";
+      document.getElementById("input-de").style.display="none";
+    }else if(mode == "input-de"){
+      document.getElementById("chon-de").style.display="none";
+      document.getElementById("input-de").style.display="block";
+    }
+  }
+});
+
+document.querySelectorAll(".mode-dd").forEach(m=>{
+  m.onclick=()=>{
+    let modeGroup = m.parentElement;
+    modeGroup.querySelectorAll(".mode-dd").forEach(x=>x.classList.remove("active"));
+    m.classList.add("active");
+    let mode=m.dataset.mode;
+    if(mode == "chon-dd"){
+      document.getElementById("chon-dd").style.display="block";
+      document.getElementById("input-dd").style.display="none";
+    }else if(mode == "input-dd"){
+      document.getElementById("chon-dd").style.display="none";
+      document.getElementById("input-dd").style.display="block";
+    }
+  }
+});
+
+document.querySelectorAll(".mode-3c").forEach(m=>{
+  m.onclick=()=>{
+    let modeGroup = m.parentElement;
+    modeGroup.querySelectorAll(".mode-3c").forEach(x=>x.classList.remove("active"));
+    m.classList.add("active");
+    let mode=m.dataset.mode;
+    if(mode == "chon-3c"){
+      document.getElementById("chon-3c").style.display="block";
+      document.getElementById("input-3c").style.display="none";
+    }else if(mode == "input-3c"){
+      document.getElementById("chon-3c").style.display="none";
+      document.getElementById("input-3c").style.display="block";
+    }
+  }
+});
+
+document.querySelectorAll(".mode-4c").forEach(m=>{
+  m.onclick=()=>{
+    let modeGroup = m.parentElement;
+    modeGroup.querySelectorAll(".mode-4c").forEach(x=>x.classList.remove("active"));
+    m.classList.add("active");
+    let mode=m.dataset.mode;
+    if(mode == "chon-4c"){
+      document.getElementById("chon-4c").style.display="block";
+      document.getElementById("input-4c").style.display="none";
+    }else if(mode == "input-4c"){
+      document.getElementById("chon-4c").style.display="none";
+      document.getElementById("input-4c").style.display="block";
+    }
+  }
+});
+
+document.querySelectorAll(".mode-xien").forEach(m=>{
+  m.onclick=()=>{
+    document.querySelectorAll(".mode-xien").forEach(x=>x.classList.remove("active"));
+    m.classList.add("active");
+    let mode = m.dataset.mode;
+    document.getElementById("xienInput").style.display = mode=="input"?"block":"none";
+    document.getElementById("xienChon").style.display = mode=="chon"?"block":"none";
+  }
+});
+
+// ===== SELECT ROW =====
+function selectRow(id,type){
+  let nums=document.querySelectorAll("#"+id+" span");
+  nums.forEach(n=>{
+    let v=parseInt(n.innerText);
+    if(type=="all") n.classList.add("active");
+    if(type=="tai") n.classList.toggle("active",v>=5);
+    if(type=="xiu") n.classList.toggle("active",v<5);
+    if(type=="le") n.classList.toggle("active",v%2==1);
+    if(type=="chan") n.classList.toggle("active",v%2==0);
+  });
+  if(mainTab === "de") calcDe();
+  else if(mainTab === "dd") calcDD();
+  else if(mainTab === "3c") calc3C();
+  else if(mainTab === "4c") calc4C();
+  else calc();
+}
+
+function clearRow(id){
+  document.querySelectorAll("#"+id+" span").forEach(n=>n.classList.remove("active"));
+  if(mainTab === "de") calcDe();
+  else if(mainTab === "dd") calcDD();
+  else if(mainTab === "3c") calc3C();
+  else if(mainTab === "4c") calc4C();
+  else calc();
+}
+
+// ===== CALCULATIONS =====
+function calc(){
+  let c = document.querySelectorAll("#chuc .active").length;
+  let d = document.querySelectorAll("#donvi .active").length;
+  let t = 1, n = 1;
+  if(type >= 3){
+    t = document.querySelectorAll("#tram .active").length;
+    if(t === 0){ updateZero(); return; }
+  }
+  if(type >= 4){
+    n = document.querySelectorAll("#ngan .active").length;
+    if(n === 0){ updateZero(); return; }
+  }
+  if(c === 0 || d === 0){ updateZero(); return; }
+  let count = c * d * t * n;
+  let money = count * rate * multi;
+  document.getElementById("count").innerText = count;
+  document.getElementById("money").innerText = money.toLocaleString();
+}
+
+function calcDe(){
+  let c = document.querySelectorAll("#de-chuc .active").length;
+  let d = document.querySelectorAll("#de-donvi .active").length;
+  if(c === 0 || d === 0){ updateZero(); return; }
+  let count = c * d;
+  let money = count * deRate * multi;
+  document.getElementById("count").innerText = count;
+  document.getElementById("money").innerText = money.toLocaleString();
+}
+
+function calcDD(){
+  let c = document.querySelectorAll("#dd-chuc .active").length;
+  if(c === 0){ updateZero(); return; }
+  let count = c;
+  let money = count * ddRate * multi;
+  document.getElementById("count").innerText = count;
+  document.getElementById("money").innerText = money.toLocaleString();
+}
+
+function calc3C(){
+  let tram = document.querySelectorAll("#3c-tram .active").length;
+  let chuc = document.querySelectorAll("#3c-chuc .active").length;
+  let donvi = document.querySelectorAll("#3c-donvi .active").length;
+  if(tram === 0 || chuc === 0 || donvi === 0){ updateZero(); return; }
+  let count = tram * chuc * donvi;
+  let money = count * rate3c * multi;
+  document.getElementById("count").innerText = count;
+  document.getElementById("money").innerText = money.toLocaleString();
+}
+
+function calc4C(){
+  let ngan = document.querySelectorAll("#4c-ngan .active").length;
+  let tram = document.querySelectorAll("#4c-tram .active").length;
+  let chuc = document.querySelectorAll("#4c-chuc .active").length;
+  let donvi = document.querySelectorAll("#4c-donvi .active").length;
+  if(ngan === 0 || tram === 0 || chuc === 0 || donvi === 0){ updateZero(); return; }
+  let count = ngan * tram * chuc * donvi;
+  let money = count * rate4c * multi;
+  document.getElementById("count").innerText = count;
+  document.getElementById("money").innerText = money.toLocaleString();
+}
+
+function updateZero(){
+  document.getElementById("count").innerText = 0;
+  document.getElementById("money").innerText = 0;
+}
+
+// ===== MULTI =====
+function plus(){multi++;update()}
+function minus(){if(multi>1)multi--;update()}
+function update(){
+  document.getElementById("multi").innerText=multi;
+  if(mainTab === "de") calcDe();
+  else if(mainTab === "dd") calcDD();
+  else if(mainTab === "3c") calc3C();
+  else if(mainTab === "4c") calc4C();
+  else calc();
+}
+
+// ===== RESET =====
+function resetAll(){
+  clearRow("ngan");
+  clearRow("tram");
+  clearRow("chuc");
+  clearRow("donvi");
+  multi=1;
+  update();
+}
+
+function resetDe(){
+  clearRow("de-chuc");
+  clearRow("de-donvi");
+  multi = 1;
+  document.getElementById("multi").innerText = multi;
+  calcDe();
+}
+
+function resetDD(){
+  clearRow("dd-chuc");
+  multi = 1;
+  document.getElementById("multi").innerText = multi;
+  calcDD();
+}
+
+function reset3C(){
+  clearRow("3c-tram");
+  clearRow("3c-chuc");
+  clearRow("3c-donvi");
+  multi = 1;
+  document.getElementById("multi").innerText = multi;
+  calc3C();
+}
+
+function reset4C(){
+  clearRow("4c-ngan");
+  clearRow("4c-tram");
+  clearRow("4c-chuc");
+  clearRow("4c-donvi");
+  multi = 1;
+  document.getElementById("multi").innerText = multi;
+  calc4C();
+}
+
+// ===== XIÊN =====
+function renderXien(){
+  let box = document.getElementById("xienNumbers");
+  if(!box) return;
+  box.innerHTML="";
+  for(let i=0;i<=99;i++){
+    let s=document.createElement("span");
+    s.innerText = i.toString().padStart(2,'0');
+    s.onclick=()=>{
+      if(s.classList.contains("disabled")) return;
+      if(s.classList.contains("active")){
+        s.classList.remove("active");
+        selectedXien = selectedXien.filter(x=>x!=s.innerText);
+      }else{
+        if(selectedXien.length >= xienType) return;
+        s.classList.add("active");
+        selectedXien.push(s.innerText);
+      }
+      updateXienUI();
+      calcXien();
+    }
+    box.appendChild(s);
+  }
+}
+
+function updateXienUI(){
+  let nums = document.querySelectorAll("#xienNumbers span");
+  if(selectedXien.length >= xienType){
+    nums.forEach(n=>{
+      if(!n.classList.contains("active")) n.classList.add("disabled");
+    });
+  }else{
+    nums.forEach(n=>n.classList.remove("disabled"));
+  }
+}
+
+function resetXien(){
+  selectedXien=[];
+  document.querySelectorAll("#xienNumbers span").forEach(n=>{
+    n.classList.remove("active","disabled");
+  });
+  calcXien();
+}
+
+function calcXien(){
+  let count = selectedXien.length === xienType ? 1 : 0;
+  let money = count * 1000 * multi;
+  document.getElementById("count").innerText = count;
+  document.getElementById("money").innerText = money.toLocaleString();
+}
+
+document.querySelectorAll(".subtab-xien").forEach(tab=>{
+  tab.onclick=()=>{
+    document.querySelectorAll(".subtab-xien").forEach(t=>t.classList.remove("active"));
+    tab.classList.add("active");
+    xienType = parseInt(tab.dataset.x);
+    resetXien();
+  }
+});
+
+// ===== MODALS & DIALOGS =====
+function openGuide(){
+  let title = "", content = "";
+  if(mainTab === "bao"){
+    title = "🎯 Bao lô";
+    content = `Bao lô: Chọn số theo hàng (2, 3 hoặc 4 số).<br><br>Trúng khi số xuất hiện trong kết quả xổ số.<br><br>Tiền thắng tính theo số lần xuất hiện (nháy).`;
+  }
+  if(mainTab === "xien"){
+    title = "🎯 Lô xiên";
+    content = `Lô xiên: Chọn từ 2 - 4 số.<br><br>Phải trúng đủ tất cả các số đã chọn mới thắng.<br><br>Tỷ lệ thưởng cao hơn nhưng khó trúng hơn.`;
+  }
+  if(mainTab === "de"){
+    title = "🎯 Đánh đề";
+    content = `Đánh đề: Chọn 2 số cuối (Chục & Đơn vị).<br><br>Có 5 loại đề: Đặc biệt, Giải 7, Giải nhất, và các loại đầu.<br><br>Trúng → ăn theo tỷ lệ đề (1000 VNĐ/mục).`;
+  }
+  if(mainTab === "dd"){
+    title = "🎯 Đầu Đuôi";
+    content = `Đầu Đuôi: Chọn chữ số hàng chục.<br><br>Có 2 loại: Đầu và Đuôi.<br><br>Chọn 1 mục = 1000 VNĐ.`;
+  }
+  if(mainTab === "3c"){
+    title = "🎯 3 Càng";
+    content = `3 Càng: Chọn 3 chữ số (Trăm, Chục, Đơn vị).<br><br>Có 4 loại: Đặc biệt, Giải nhất, Đầu Đuôi, Đầu.<br><br>Giá từ 1000 - 4000 VNĐ/mục.`;
+  }
+  if(mainTab === "4c"){
+    title = "🎯 4 Càng";
+    content = `4 Càng: Chọn 4 chữ số (Ngàn, Trăm, Chục, Đơn vị).<br><br>Chỉ có 1 loại với giá 1000 VNĐ/mục.<br><br>Phải trúng đủ 4 chữ số.`;
+  }
+  document.getElementById("guideTitle").innerHTML = title;
+  document.getElementById("guideContent").innerHTML = content;
+  document.getElementById("guideModal").style.display = "flex";
+}
+
+function closeGuide(){
+  document.getElementById("guideModal").style.display = "none";
+}
+
+function closeModal(id){
+  document.getElementById(id).style.display="none";
+}
+
+function openLogin(){
+  document.getElementById("loginModal").style.display="flex";
+}
+
+function openRegister(){
+  document.getElementById("registerModal").style.display="flex";
+}
+
+function login(){
+  alert("Chức năng đang phát triển");
+}
+
+function register(){
+  alert("Chức năng đang phát triển");
+}
+
+function openPromo(){
+  document.getElementById("promo-overlay").style.display="flex";
+}
+
+function openGiftPopup(){
+  document.getElementById("gift-popup").style.display="block";
+}
+
+function goNap(){
+  openPromo();
+  document.getElementById("gift-popup").style.display="none";
+}
+
+function goAccount(page){
+  alert("Chuyển đến trang " + page);
+}
+
+function withdraw(){
+  alert("Chức năng rút tiền đang phát triển");
+}
+
+// ===== DASHBOARD FUNCTIONS =====
+function updateBalance(){
+  document.getElementById("balance").innerText = balance.toLocaleString();
+}
+
+function renderBets(){
+  let list = document.getElementById("list");
+  let history = document.getElementById("history");
+  if(list) list.innerHTML="";
+  if(history) history.innerHTML="";
+  
+  bets.slice(0,3).forEach(b=>{
+    if(list){
+      let el=document.createElement("div");
+      el.className="bet-item";
+      el.innerHTML=`<span>${b.so}</span><b>${b.tien.toLocaleString()}đ</b>`;
+      list.appendChild(el);
+    }
+  });
+}
+
+function sendAI(){
+  let input = document.getElementById("userInput").value.trim();
+  if(!input) return;
+  let chat = document.getElementById("chatBox");
+  let u=document.createElement("div");
+  u.className="chat-user";
+  u.textContent="👤 "+input;
+  chat.appendChild(u);
+  
+  setTimeout(()=>{
+    let ai=document.createElement("div");
+    ai.className="chat-ai";
+    ai.innerHTML = `🤖 Gợi ý: <b>${Math.floor(Math.random()*100).toString().padStart(2,'0')}</b>`;
+    chat.appendChild(ai);
+    chat.scrollTop = chat.scrollHeight;
+  },800);
+  
+  document.getElementById("userInput").value="";
+}
+
+function randomSo(){
+  let so = Math.floor(Math.random()*100).toString().padStart(2,'0');
+  alert("🎲 Số may mắn: " + so);
+}
+
+function checkKetQua(){
+  let so = document.getElementById("checkSo").value;
+  if(!so) return;
+  let kq = document.getElementById("checkResult");
+  kq.innerHTML = "🔍 Kết quả: Chưa có dữ liệu cho " + so;
+  kq.style.color="#999";
+}
+
+// ===== INIT =====
+window.addEventListener("DOMContentLoaded", () => {
+  updateBalance();
+  renderBets();
+  document.getElementById("promo-close").onclick = ()=>{document.getElementById("promo-overlay").style.display="none";}
+});
+</script>
+</body>
+</html>
